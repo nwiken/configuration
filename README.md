@@ -1,2 +1,2 @@
-# configuration
+# Configuration
 Useful configuration files

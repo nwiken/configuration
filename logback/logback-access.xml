@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<configuration debug="false" scan="false">
+
+    <springProperty scope="context" name="appName" source="spring.application.name"/>
+
+    <appender name="logstash-access" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder class="net.logstash.logback.encoder.AccessEventCompositeJsonEncoder">
+
+            <providers>
+
+                <timestamp>
+                    <timeZone>UTC</timeZone>
+                </timestamp>
+                <version/>
+                <pattern>
+                    <pattern>
+                        {
+                        "remote_ip": "%a",
+                        "user": "%u",
+                        "status_code": "%s",
+                        "elapsed_time": "%D",
+                        "user_agent": "%i{User-Agent}",
+                        "referer": "%i{Referer}",
+                        "session": "%requestCookie{JSESSIONID}",
+                        "appName": "${appName:-}",
+                        "logType": "access",
+                        "trace": "%i{X-B3-TraceId:-}",
+                        "span": "%i{X-B3-SpanId:-}",
+                        "parent": "%i{X-B3-ParentSpanId:-}",
+                        "exportable": "%i{X-Span-Export:-}"
+                        }
+                    </pattern>
+                </pattern>
+            </providers>
+            <appender-ref ref="STDOUT"/>
+        </encoder>
+    </appender>
+
+    <appender-ref ref="logstash-access"/>
+
+</configuration>
