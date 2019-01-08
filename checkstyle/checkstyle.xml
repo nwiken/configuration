@@ -1,0 +1,21 @@
+<plugin>
+  <groupId>org.apache.maven.plugins</groupId>
+  <artifactId>maven-checkstyle-plugin</artifactId>
+  <version>${checkstyle.version}</version>
+  <executions>
+    <execution>
+      <id>validate</id>
+      <phase>validate</phase>
+      <configuration>
+        <configLocation>kf_google_checkstyle.xml</configLocation>
+        <encoding>UTF-8</encoding>
+        <consoleOutput>true</consoleOutput>
+        <failsOnError>true</failsOnError>
+        <violationSeverity>warning</violationSeverity>
+      </configuration>
+      <goals>
+        <goal>check</goal>
+      </goals>
+    </execution>
+  </executions>
+</plugin>
