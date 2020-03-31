@@ -1,0 +1,65 @@
+<dependencyManagement>
+  <dependency>
+    <groupId>com.sun.xml.ws</groupId>
+    <artifactId>jaxws-rt</artifactId>
+    <version>${jaxws-rt}</version>
+    <type>pom</type>
+    <scope>import</scope>
+  </dependency>
+</dependencyManagement>
+
+<dependencies>
+  <dependency>
+    <groupId>javax.xml.bind</groupId>
+    <artifactId>jaxb-api</artifactId>
+  </dependency>
+  <dependency>
+    <groupId>javax.xml.ws</groupId>
+    <artifactId>jaxws-api</artifactId>
+  </dependency>
+  <dependency>
+    <groupId>javax.jws</groupId>
+    <artifactId>javax.jws-api</artifactId>
+  </dependency>
+</dependencies>
+
+<build>
+  <plugin>
+  <!-- Generates java artifacts from wsdl provided by CLA -->
+  <groupId>org.apache.cxf</groupId>
+  <artifactId>cxf-codegen-plugin</artifactId>
+  <version>3.3.3</version>
+  <executions>
+    <execution>
+    <id>generate-sources</id>
+    <phase>generate-sources</phase>
+    <configuration>
+      <sourceRoot>${project.build.directory}/generated-sources/cxf</sourceRoot>
+      <wsdlOptions>
+        <wsdlOption>
+          <wsdl>${project.basedir}/src/main/resources/externalcpi/wsdl/external-pci-service.wsdl</wsdl>
+          <bindingFiles>
+            <bindingsFile>${project.basedir}/src/main/resources/bindings/bindings.xml</bindingsFile>
+          </bindingFiles>
+          <extraargs>
+            <extraarg>-xjc-Xsetters</extraarg>
+           </extraargs>
+        </wsdlOption>
+      </wsdlOptions>
+      </configuration>
+      <goals>
+        <goal>wsdl2java</goal>
+      </goals>
+      </execution>
+      </executions>
+      <dependencies>
+       <!-- plugin needed to customize cxf generated classes -->
+        <dependency>
+          <groupId>org.jvnet.jaxb2_commons</groupId>
+          <artifactId>jaxb2-basics</artifactId>
+          <version>0.9.4</version>
+        </dependency>
+      </dependencies>
+    </plugin>
+  </plugins>
+</build>
